@@ -16,11 +16,15 @@ def determine_image_path(folder_name):
 
 
 
-# Single method to modify a single image for a single song
-def modify_image(song_name):
-    old_img_path = determine_image_path(song_name)
-    move_images(old_img_path, move_imgs)
-    copy_new_image(input_img, old_img_path)
+# Single method to modify all images for all songs
+def modify_songs_images(song_list):
+    for song in song_list:
+        try:
+            old_img_path = determine_image_path(song)
+            move_images(old_img_path, move_imgs)
+            copy_new_image(input_img, old_img_path)
+        except(FileExistsError):
+            print("Image for {} is already modified.\n".format(file))
 
 
 # Move images into another folder and change name
@@ -29,6 +33,10 @@ def move_images(old_image_path, backup_dir):
     os.rename(old_image_path, backup_dir + "\\{} _ {}".format(folder_name, old_image_path.split("\\")[-1]))
     print("Moved image of song: {}".format(folder_name))
 
+
+# Revert changes to song's images
+def revert_songs_images(song_list):
+    pass
 
 choice = input("Enter 1 to replace, 2 to restore, and anything else to exit: ")
 print("")
@@ -43,15 +51,9 @@ songs = [i for i in os.listdir(songs_path) if i != "1011011 nekodex - new beginn
 
 # Update ALL images to given image
 if choice == "1":
-    for file in songs:
-        try:
-            modify_image(file)
-            print("")
-        except(FileExistsError):
-            print("Image for {} is already modified.\n".format(file))
+    modify_songs_images(songs)
 # Check each folder and return image back to location
 elif choice == "2":
-    for file in songs:
-        pass
+    revert_songs_images(songs)
 
 print("Exiting")
