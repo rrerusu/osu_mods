@@ -1,12 +1,11 @@
-import shutil
 import os
 
-# Copy images to another folder
+# Move images into another folder and change name
 def modify_image(folder_name):
     song_path = songs_path + "\\{}".format(folder_name)
     image = [i for i in os.listdir(song_path) if i[-4:] == ".jpg" or i[-4:] == ".png" or i[-5:] == ".jpeg"]
     image_path = song_path + "\\" + image[0]
-    shutil.copy(image_path, move_imgs)
+    os.rename(image_path, move_imgs + "\\{} _ {}".format(folder_name, image[0]))
 
 
 # Vars
