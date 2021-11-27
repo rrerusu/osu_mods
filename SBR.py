@@ -23,8 +23,8 @@ def move_images(folder_name):
     return image_path
 
 
-
 choice = input("Enter 1 to replace, 2 to restore, and anything else to exit: ")
+print("")
 
 # Vars for both methods
 # TODO: Get user input for song and image locations
@@ -38,9 +38,12 @@ if choice == "1":
 
     # Change each image
     for file in songs:
-        original_img_path = move_images(file)
-        copy_new_image(input_img, original_img_path)
-        print("")
+        try:
+            original_img_path = move_images(file)
+            copy_new_image(input_img, original_img_path)
+            print("")
+        except(FileExistsError):
+            print("Image for {} is already modified.\n".format(file))
 elif choice == "2":
     pass
 
