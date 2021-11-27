@@ -24,7 +24,7 @@ def modify_songs_images(song_list):
             move_images(old_img_path, move_imgs)
             copy_new_image(input_img, old_img_path)
         except(FileExistsError):
-            print("Image for {} is already modified.\n".format(file))
+            print("Image for {} is already modified.\n".format(song))
 
 
 # Move images into another folder and change name
