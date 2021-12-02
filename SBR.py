@@ -2,7 +2,7 @@ import shutil
 import os
 
 
-# Version: 1.0
+# Version: 1.0.1
 # Capabilities:
 #   * Change all song images in "Songs" folder to a single image
 #   * Revert all song images to original image files
@@ -57,7 +57,7 @@ def modify_songs_images(song_list):
 # Move images into another folder and change name
 def move_images(old_image_path, backup_dir):
     folder_name = old_image_path.split("\\")[-2]
-    os.rename(old_image_path, backup_dir + "\\{} _ {}".format(folder_name, old_image_path.split("\\")[-1]))
+    shutil.move(old_image_path, backup_dir + "\\{} _ {}".format(folder_name, old_image_path.split("\\")[-1]))
     print("Moved image of song: {}".format(folder_name))
 
 
@@ -73,7 +73,7 @@ def revert_songs_images(song_list):
                 indx += 1
             if indx != -1:
                 os.remove(determine_image_path(song_list[indx]))
-                os.rename("{}\\{}".format(move_imgs, image), "{}\\{}\\{}".format(songs_path, song_list[indx], image[len(song_list[indx]) + 3:]))
+                shutil.move("{}\\{}".format(move_imgs, image), "{}\\{}\\{}".format(songs_path, song_list[indx], image[len(song_list[indx]) + 3:]))
                 print("Image of {} reverted.".format(song_list[indx]))
             else:
                 print("Image for {} was not changed".format(song_list[indx]))
