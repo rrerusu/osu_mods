@@ -21,6 +21,16 @@ def determine_image_path(folder_name):
     return song_path + "\\" + image[0]
 
 
+# Get file info for song and backup image location
+def get_path_info():
+    while True:
+        songs_path = input("Enter folder that osu was installed in: ")                                                         # Path of folders that contains songs
+        if(os.path.exists(songs_path) and "osu!.exe" in os.listdir(songs_path)):
+            break
+        else:
+            print("Path is incorrect.\n")
+    return songs_path
+
 
 # Single method to modify all images for all songs
 def modify_songs_images(song_list):
@@ -28,7 +38,13 @@ def modify_songs_images(song_list):
         os.mkdir(move_imgs)
     except FileExistsError:
         pass
-    input_img = "C:\\Users\\rrerusu\\Downloads\\Testing Folder\\change_image\\louis.jpg"                                # Path of image to use to change song images
+    
+    while True:
+        input_img = input("Enter path of image to replace with: ")                                                      # Path of image to use to change song images
+        if os.path.exists(input_img):
+            break
+        else:
+            print("Image not found.\n")
     for song in song_list:
         try:
             old_img_path = determine_image_path(song)
@@ -70,7 +86,7 @@ print("")
 # TODO: Get user input for song and image locations
 # TODO: Check to make sure osu.exe is in folder (Safety)
 move_imgs = __file__[:-6] + "old_image"                                                                             # Path of folder that contains backup of images
-songs_path = __file__[:-6] + "Songs"                                                                                # Path of folders that contains songs
+songs_path = "{}\\Songs".format(get_path_info())
 songs = [i for i in os.listdir(songs_path) if i != "1011011 nekodex - new beginnings"]                              # Collect list of songs (folders in Songs folder)
 
 # Update ALL images to given image
